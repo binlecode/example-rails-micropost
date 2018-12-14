@@ -15,7 +15,7 @@
     <td><%= micropost.user_id %></td>
     <td><%= link_to 'Show', micropost %></td>
     <td><%= link_to 'Edit', edit_micropost_path(micropost) %></td>
-    <td><%= link_to 'Destroy', micropost, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', micropost, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
