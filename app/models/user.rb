@@ -1,3 +1,7 @@
-class User < ActiveRecord::Base
-  has_many :microposts
+class User < ApplicationRecord
+
+    has_many :microposts
+
+    validates :name, presence: true
+
 end

@@ -1,83 +1,74 @@
 class MicropostsController < ApplicationController
+  before_action :set_micropost, only: [:show, :edit, :update, :destroy]
+
   # GET /microposts
-  # GET /microposts.xml
+  # GET /microposts.json
   def index
     @microposts = Micropost.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @microposts }
-    end
   end
 
   # GET /microposts/1
-  # GET /microposts/1.xml
+  # GET /microposts/1.json
   def show
-    @micropost = Micropost.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @micropost }
-    end
   end
 
   # GET /microposts/new
-  # GET /microposts/new.xml
   def new
     @micropost = Micropost.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @micropost }
-    end
   end
 
   # GET /microposts/1/edit
   def edit
-    @micropost = Micropost.find(params[:id])
   end
 
   # POST /microposts
-  # POST /microposts.xml
+  # POST /microposts.json
   def create
-    @micropost = Micropost.new(params[:micropost])
+    @micropost = Micropost.new(micropost_params)
 
     respond_to do |format|
       if @micropost.save
-        format.html { redirect_to(@micropost, :notice => 'Micropost was successfully created.') }
-        format.xml  { render :xml => @micropost, :status => :created, :location => @micropost }
+        format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
+        format.json { render :show, status: :created, location: @micropost }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @micropost.errors, :status => :unprocessable_entity }
+        format.html { render :new }
+        format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /microposts/1
-  # PUT /microposts/1.xml
+  # PATCH/PUT /microposts/1
+  # PATCH/PUT /microposts/1.json
   def update
-    @micropost = Micropost.find(params[:id])
-
     respond_to do |format|
-      if @micropost.update_attributes(params[:micropost])
-        format.html { redirect_to(@micropost, :notice => 'Micropost was successfully updated.') }
-        format.xml  { head :ok }
+      if @micropost.update(micropost_params)
+        format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
+        format.json { render :show, status: :ok, location: @micropost }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @micropost.errors, :status => :unprocessable_entity }
+        format.html { render :edit }
+        format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /microposts/1
-  # DELETE /microposts/1.xml
+  # DELETE /microposts/1.json
   def destroy
-    @micropost = Micropost.find(params[:id])
     @micropost.destroy
-
     respond_to do |format|
-      format.html { redirect_to(microposts_url) }
-      format.xml  { head :ok }
+      format.html { redirect_to microposts_url, notice: 'Micropost was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_micropost
+      @micropost = Micropost.find(params[:id])
+    end
+
+    # Only allow a list of trusted parameters through.
+    def micropost_params
+      params.require(:micropost).permit(:content, :user_id)
+    end
 end
