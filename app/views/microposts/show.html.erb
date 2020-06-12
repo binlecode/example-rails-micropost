@@ -1,14 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @micropost.content %>
-</p>
 
-<p>
-  <strong>User:</strong>
-  <%= @micropost.user_id %>
-</p>
+<div class="card" style="width: 65%;">
+  <%= image_tag('zen.jpeg', :class => 'card-img-top') %>
+  <%# raw img html tag will be used to display user uploaded images that are typically from public folder %>
+  <%# <img class="card-img-top" src="/images/office_jerk.jpeg" alt="Card image cap"> %>
+  <div class="card-body">
+    <h5 class="card-title">Content</h5>
+    <p class="card-text">
+      <%= @micropost.content %>
+    </p>
+
+    <a href="#" class="card-link">User: 
+      <%= @micropost.user_id %>
+    </a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_micropost_path(@micropost) %> |
 <%= link_to 'Back', microposts_path %>
