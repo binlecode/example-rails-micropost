@@ -44,6 +44,15 @@ class MicropostsController < ApplicationController
       if @micropost.update(micropost_params)
         format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }
         format.json { render :show, status: :ok, location: @micropost }
+
+        # action cable channel broadcasting
+        #
+        # @microposts = Micropost.all
+        #
+        # Broadcast messages typically consist of Ruby hashes, which are converted to JSON to
+        # go across the wire and end up as JavaScript objects.
+        ActionCable.server.broadcast 'microposts',
+                                     text: "post has been updated: #{@micropost.inspect}"
       else
         format.html { render :edit }
         format.json { render json: @micropost.errors, status: :unprocessable_entity }

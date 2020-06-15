@@ -13,7 +13,16 @@
   <body>
 
     <section>
+      <!-- place holder for broadcast message from websocket (Rails channel) -->
+      <div id="message-container" class="jumbotron">
+        <p id="message-bar" class="text-info"></p>
+      </div>
+
       <div class="container">
+        <div class="page-header">
+          <h1>to be filled</h1>
+        </div>
+
         <%= yield %>
       </div>
     </section>
